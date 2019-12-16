@@ -1,0 +1,478 @@
+openapi: '3.0.0'
+info:
+  title: Cloud Enabled Work Queue
+  description: API for FIU Senior Project Fall 2019
+  version: 1.0.0
+paths:
+  /company:
+    get:
+      tags:
+        - company
+      summary: Gets all companies
+      description: Returns a list containing all companies.
+      parameters:
+        - $ref: '#/components/parameters/x-auth-token'
+      responses:
+        '200':
+          $ref: '#/components/responses/GetAllCompaniesResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+    post:
+      tags:
+        - company
+      summary: Create a company
+      description: Returns the company created.
+      parameters:
+        - $ref: '#/components/parameters/x-auth-token'
+      requestBody:
+        $ref: '#/components/requestBodies/CreateCompanyBody'
+      responses:
+        '200':
+          $ref: '#/components/responses/CreateCompanyResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse'
+  /company/{id}:
+    get:
+      tags:
+        - company
+      summary: Gets one company by id
+      description: Returns company by id.
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/x-auth-token'
+      responses:
+        '200':
+          $ref: '#/components/responses/GetOneCompanyResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse'
+    post:
+      tags:
+        - company
+      summary: Updates one company by id
+      description: Updates and then returns company by id.
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/x-auth-token'
+      responses:
+        '200':
+          $ref: '#/components/responses/UpdateOneCompanyResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse'
+    delete:
+      tags:
+        - company
+      summary: Deletes one company by id
+      description: Deletes company by id.
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/x-auth-token'
+      responses:
+        '200':
+          $ref: '#/components/responses/DeleteOneCompanyResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse'
+  /user:
+    get:
+      tags:
+        - user
+      summary: Gets all users
+      description: Returns a list containing all users.
+      responses:
+        '200':
+          $ref: '#/components/responses/GetAllUsersResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+    post:
+      tags:
+        - user
+      summary: Create a user
+      description: Returns the user created.
+      responses:
+        '200':
+          $ref: '#/components/responses/CreateUserResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse'
+  /user/{id}:
+    get:
+      tags:
+        - user
+      summary: Gets one user by id
+      description: Returns user by id.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            minimum: 1
+          description: The user id
+      responses:
+        '200':
+          $ref: '#/components/responses/GetOneUserResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse'
+    post:
+      tags:
+        - user
+      summary: Updates one user by id
+      description: Updates and then returns user by id.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            minimum: 1
+          description: The user id
+      responses:
+        '200':
+          $ref: '#/components/responses/UpdateOneUserResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse'
+    delete:
+      tags:
+        - user
+      summary: Deletes one user by id
+      description: Deletes user by id.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            minimum: 1
+          description: The user id
+      responses:
+        '200':
+          $ref: '#/components/responses/DeleteOneUserResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse'
+
+components:
+  parameters:
+    # auth token
+    x-auth-token:
+      in: header
+      name: x-auth-token
+      required: true
+      description: Signed jwt for authentication
+      example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWQ4OTViOTY5OTg4YmNiMTY4YmM5MWM3In0sImlhdCI6MTU2OTI4Mjk2NiwiZXhwIjoxNTY5NjQyOTY2fQ.UI8PVPsm4LWtwNb3zO9gQeFtZS3NLux41q6GiX4VkII'
+      schema:
+        $ref: '#/components/schemas/XAuthToken'
+    id:
+      in: path
+      name: id
+      required: true
+      example: '5d85a05681b9aa99e3c9581d'
+      schema:
+        type: string
+        minimum: 1
+        description: Object id
+
+  requestBodies:
+    CreateCompanyBody:
+      description: 'A JSON object containing company information'
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CreateCompanyBody'
+
+  responses:
+    # Company Responses
+    GetAllCompaniesResponse:
+      description: A list of companies
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CompaniesTrimmed'
+    CreateCompanyResponse:
+      description: A company
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Company'
+    GetOneCompanyResponse:
+      description: A company
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Company'
+    UpdateOneCompanyResponse:
+      description: A company
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Company'
+    DeleteOneCompanyResponse:
+      description: Deletion message
+      content:
+        application/json: {}
+
+    # User Responses
+    GetAllUsersResponse:
+      description: A list of users
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Users'
+    CreateUserResponse:
+      description: A user
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Users'
+    GetOneUserResponse:
+      description: A user
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Users'
+    UpdateOneUserResponse:
+      description: A user
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/User'
+    DeleteOneUserResponse:
+      description: Deletion message
+      content:
+        application/json: {}
+
+    # Generic Responses
+    BadRequestResponse:
+      description: Bad request
+      content:
+        application/json: {}
+
+    UnauthorizedResponse:
+      description: Invalid jwt
+      content:
+        application/json: {}
+
+    ForbiddenResponse:
+      description: Not authorized to use route
+      content:
+        application/json: {}
+
+    VersionResponse:
+      description: Version response object
+      headers:
+        X-Request-Id:
+          $ref: '#/components/headers/X-Request-Id'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Version'
+
+  headers:
+    X-Request-Id:
+      required: true
+      description: unique ID for the request
+      schema:
+        $ref: '#/components/schemas/XRequestId'
+
+  schemas:
+    # Request data models
+    # POST api/company
+    CreateCompanyBody:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          example: 'Assurant'
+    # Generic Data models
+    # Company data model
+    Company:
+      type: object
+      required:
+        - _id
+        - name
+        - owner
+        - employees
+        - admins
+        - date
+      properties:
+        _id:
+          type: string
+          format: uuid
+          example: '5d85a05681b9aa99e3c9581d'
+          description: unique ID
+        name:
+          type: string
+          example: 'Assurant'
+        owner:
+          $ref: '#/components/schemas/User'
+        employees:
+          $ref: '#/components/schemas/Users'
+        admins:
+          $ref: '#/components/schemas/Users'
+        tickets:
+          $ref: '#/components/schemas/Tickets'
+        date:
+          type: string
+          format: date-time
+          example: '2019-09-21T04:00:22.673Z'
+    # User data model
+    User:
+      type: object
+      required:
+        - _id
+        - name
+        - email
+        - password
+        - role
+        - date
+      properties:
+        _id:
+          type: string
+          format: uuid
+          example: '5d85a05681b9aa99e3c9581d'
+          description: unique ID
+        name:
+          type: string
+          example: 'Samantha Lash'
+        email:
+          type: string
+          example: 'samantha@gmail.com'
+        password:
+          type: string
+          example: 'wefbweobwef3434f43qfgqw34fq34q34gq'
+        role:
+          type: string
+          example: 'SUPERUSER'
+        date:
+          type: string
+          format: date-time
+          example: '2019-09-21T04:00:22.673Z'
+    # Ticket data model
+    Ticket:
+      type: object
+      required:
+        - id
+        - closed
+      properties:
+        _id:
+          type: string
+          format: uuid
+          example: '5d85a05681b9aa99e3c9581d'
+          description: unique ID
+        customer:
+          $ref: '#/components/schemas/User'
+        employee:
+          $ref: '#/components/schemas/User'
+        history:
+          type: array
+          items:
+            $ref: '#/components/schemas/Event'
+        waitingon:
+          $ref: '#/components/schemas/User'
+        closed:
+          type: boolean
+          example: false
+    # Event data model
+    Event:
+      type: object
+      required:
+        - _id
+        - entity
+        - type
+        - date
+      properties:
+        _id:
+          type: string
+          format: uuid
+          example: '5d85a05681b9aa99e3c9581d'
+          description: unique ID
+        entity:
+          $ref: '#/components/schemas/User'
+        description:
+          type: string
+          example: 'Customer inquired about connection outage'
+        type:
+          type: string
+          example: 'Created'
+        date:
+          type: string
+          format: date-time
+          example: '2019-09-21T04:00:22.673Z'
+    # Lists
+    # Custom
+    CompaniesTrimmed:
+      type: array
+      items:
+        type: object
+        properties:
+          _id:
+            type: string
+            format: uuid
+            example: '5d85a05681b9aa99e3c9581d'
+            description: unique ID
+          name:
+            type: string
+            example: 'Assurant'
+          owner:
+            $ref: '#/components/schemas/User'
+          date:
+            type: string
+            format: date-time
+            example: '2019-09-21T04:00:22.673Z'
+    # Generic
+    Companies:
+      type: array
+      items:
+        $ref: '#/components/schemas/Company'
+    Users:
+      type: array
+      items:
+        $ref: '#/components/schemas/User'
+    Tickets:
+      type: array
+      items:
+        $ref: '#/components/schemas/Ticket'
+
+    Version:
+      type: object
+      required:
+        - version
+      properties:
+        version:
+          type: string
+          example: 1.23.45
+          pattern: ^\d\.\d\.\d$
+
+    XAuthToken:
+      description: Signed jwt for authentication
+      type: string
+      format: uuid
+
+    XRequestId:
+      description: unique ID for the request
+      type: string
+      format: uuid

@@ -1,0 +1,43 @@
+{
+  "name": "cewq",
+  "version": "1.0.0",
+  "description": "Cloud Enabled Work Queue",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server",
+    "server": "nodemon server",
+    "test": "./node_modules/.bin/mocha --exit --timeout 10000",
+    "remove-modules": "rm -rf node_modules",
+    "install-modules": "npm install",
+    "clean": "npm run remove-modules && npm run install-modules"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/osnielvaldivia/cis4911-cewq.git"
+  },
+  "author": "Osniel Valdivia",
+  "license": "",
+  "bugs": {
+    "url": "https://github.com/osnielvaldivia/cis4911-cewq/issues"
+  },
+  "homepage": "https://github.com/osnielvaldivia/cis4911-cewq#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "config": "^3.1.0",
+    "express": "^4.16.4",
+    "express-validator": "^5.3.1",
+    "faker": "^4.1.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.7.5",
+    "swagger-jsdoc": "^3.4.0",
+    "swagger-ui-express": "^4.1.2"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "concurrently": "^4.1.0",
+    "js-yaml": "^3.13.1",
+    "mocha": "^6.2.1",
+    "nodemon": "^1.19.0",
+    "supertest": "^4.0.2"
+  }
+}
